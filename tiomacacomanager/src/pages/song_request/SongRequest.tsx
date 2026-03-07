@@ -6,12 +6,10 @@ import {
   Button,
   Paper,
   Alert,
-  Dialog,
-  Box,
   Snackbar
 } from "@mui/material"
 import { useState } from "react"
-import type { SongRequest } from "../../model/SongRequest"
+import { getDefaultSongRequest, type SongRequest } from "../../model/SongRequest"
 import { useNavigate } from "react-router-dom"
 
 import {SongRequestService} from "../../services/SongRequestService"
@@ -39,22 +37,17 @@ const songrequestService = new SongRequestService();
 export  function SongRequest() {
 
 
-  const [songrequest, setSongrequest] = useState<SongRequest>({
-    request_time: "",
-    sender: "",
-    songname: "",
-    vid_url: "",
-    song_thumbnail:""
-  })
+  const [songrequest, setSongrequest] = useState<SongRequest>(getDefaultSongRequest())
 
   const [errors, setErrors] = useState({
     vid_url: false,
-    unspecified: true
+    unspecified: false
   })
 
   const navigator = useNavigate()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = 
+  (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
 
     setSongrequest(prev => ({
@@ -71,6 +64,7 @@ export  function SongRequest() {
   }
 
   const handleSubmit = () => {
+    debugger
     const hasVideoError =
       !isValidYouTubeUrl(songrequest.vid_url)
 
@@ -80,23 +74,12 @@ export  function SongRequest() {
     const rawThumbnail = getThumbnail(songrequest.vid_url)
     const extracted_thumbnail = rawThumbnail ?? ""
 
-
     const songrequest_with_thumbnail = ({...songrequest,song_thumbnail:extracted_thumbnail})
 
-    songrequestService
-    .new_song_request(songrequest_with_thumbnail)
-    .then((r) => {
-
-    navigator("/song_ok",{state:{...songrequest,song_thumbnail:extracted_thumbnail}})
-    setSongrequest({
-      request_time:"",
-      sender: "",
-      songname: "",
-      vid_url: "",
-      song_thumbnail:""
-    })
-    })
-    .catch((e) => {
+    songrequestService.new_song_request(songrequest_with_thumbnail).then((resp) => {
+      setSongrequest(getDefaultSongRequest())
+      navigator("/song_ok",{state:{...songrequest,song_thumbnail:extracted_thumbnail}})
+    }).catch((e) => {
       setErrors(prev => ({...prev, unspecified: hasVideoError }))
       console.error(e)
     })

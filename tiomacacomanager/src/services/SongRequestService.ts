@@ -29,6 +29,15 @@ export class SongRequestService{
         })
     }
 
+    delete_song_request(req:SongRequest) {
+        console.log("Sending request:", req);
+        const endpoint = `${this.api_base}/song_request/${req.requestid}`;
+            
+        return fetch(endpoint, {
+            method: "DELETE",
+        })
+    }
+
     get_song_requests():Promise<Array<SongRequest>> {
         console.log("Fetching songRequests:");
         const endpoint = `${this.api_base}/song_request`;
@@ -58,7 +67,6 @@ export class SongRequestService{
     }   
 
     startWebSocket(){
-        debugger
         if (this.webSocket === null || this.webSocket?.readyState == WebSocket.CLOSED){
             const ws_endpoint = `${this.ws_host}/song_request`
 

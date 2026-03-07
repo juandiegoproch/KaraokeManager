@@ -6,3 +6,13 @@ export interface SongRequest{
     song_thumbnail: string
     requestid?: string,
 }
+
+export function getDefaultSongRequest(): SongRequest {
+    return {
+    request_time: "",
+    sender: "",
+    songname: "",
+    vid_url: "",
+    song_thumbnail:""
+  }
+}
