@@ -1,2 +1,0 @@
-architect-functions
-boto3
