@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  db:
+    image: mongo:7.0
+    container_name: tiomacaco-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: tiomacaco
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: ./tiomacacomanagerback
+    container_name: tiomacaco-backend
+    environment:
+      DATABASE_URL: "mongodb://root:example@db:27017/tiomacaco?authSource=admin"
+      DATABASE_NAME: "tiomacaco"
+    depends_on:
+      - db
+    ports:
+      - "8081:8081"
+
+  frontend:
+    build: ./tiomacacomanager
+    container_name: tiomacaco-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:

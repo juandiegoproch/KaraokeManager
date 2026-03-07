@@ -2,8 +2,8 @@ import type { SongRequest } from "../model/SongRequest"
 
 
 export class SongRequestService{
-    private readonly api_base: string = "http://127.0.0.1:8000"
-    private readonly ws_host: string = "ws://127.0.0.1:8000"
+    private readonly api_base: string = "http://prochazkahost.ddns.net:8081"
+    private readonly ws_host: string = "ws://prochazkahost.ddns.net:8081"
 
     private webSocket: WebSocket | null = null;
 

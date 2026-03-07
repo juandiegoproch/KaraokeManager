@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Paper, Stack, Typography, Card, CardMedia, CardContent, Divider, CardActionArea} from "@mui/material";
+import { Box, Container, Grid, Paper, Stack, Typography, Card, CardMedia, CardContent, CardActionArea} from "@mui/material";
 import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import type { SongRequest } from "../../model/SongRequest";

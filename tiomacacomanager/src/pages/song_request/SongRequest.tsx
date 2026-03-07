@@ -76,7 +76,7 @@ export  function SongRequest() {
 
     const songrequest_with_thumbnail = ({...songrequest,song_thumbnail:extracted_thumbnail})
 
-    songrequestService.new_song_request(songrequest_with_thumbnail).then((resp) => {
+    songrequestService.new_song_request(songrequest_with_thumbnail).then(() => {
       setSongrequest(getDefaultSongRequest())
       navigator("/song_ok",{state:{...songrequest,song_thumbnail:extracted_thumbnail}})
     }).catch((e) => {
