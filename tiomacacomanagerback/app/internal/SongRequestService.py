@@ -47,5 +47,16 @@ def getAllSongRequests() -> List[SongRequest]:
         raise Exception("Error fetching from database:",e)
     song_requests = [SongRequest(**sr) for sr in res]
     return song_requests
+
+def deleteSongRequestById(sr: uuid.UUID) -> SongRequest:
+    try:
+        db = _getDbConnection().get_database(_DB_NAME)
+        songrequests = db.get_collection(_COLLECTION)
+        res = songrequests.delete_one({"requestid":sr})
+        print(res.deleted_count)
+        print(res.raw_result)
+    except Exception as e:
+        raise Exception("Error inserting to database:",e)
+    return res.raw_result
     
 
