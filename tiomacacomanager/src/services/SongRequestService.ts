@@ -2,8 +2,8 @@ import type { SongRequest } from "../model/SongRequest"
 
 
 export class SongRequestService{
-    private readonly api_base: string = "http://192.168.1.69:3333"
-    private readonly ws_host: string = "ws://192.168.1.69:3333"
+    private readonly api_base: string = "http://127.0.0.1:8000"
+    private readonly ws_host: string = "ws://127.0.0.1:8000"
 
     private webSocket: WebSocket | null = null;
 
@@ -48,7 +48,6 @@ export class SongRequestService{
     }
 
     onMessage(ev: MessageEvent){
-        debugger
         console.log("Message recieved at ws:")
         console.log(ev.data)
         const msg_raw = JSON.parse(ev.data);
@@ -59,8 +58,11 @@ export class SongRequestService{
     }   
 
     startWebSocket(){
+        debugger
         if (this.webSocket === null || this.webSocket?.readyState == WebSocket.CLOSED){
-            this.webSocket = new WebSocket(this.ws_host)
+            const ws_endpoint = `${this.ws_host}/song_request`
+
+            this.webSocket = new WebSocket(ws_endpoint)
             this.webSocket.onopen = () => console.log("Connected to ws")
             this.webSocket.onmessage = this.onMessage.bind(this);
             this.webSocket.onclose = () => console.log("Disconnected from ws")

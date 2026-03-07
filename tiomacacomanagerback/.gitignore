@@ -1,0 +1,40 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python build artifacts
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.*
+
+# SQLite or local databases (optional if using Mongo/Postgres)
+*.sqlite3
+*.db
+
+# FastAPI / Starlette temporary files
+*.uvicorn.log
+*.coverage
+
+# Node modules if using frontend in same repo
+node_modules/
+
+# IDE/editor specific
+.vscode/
+.idea/
+*.swp
+.DS_Store
