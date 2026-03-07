@@ -17,8 +17,3 @@ jobs:
         run: |
           docker compose down -v || true
           docker compose up --build -d
-          sleep 10
-
-      - name: Tear down Docker Compose
-        if: always()
-        run: docker compose down -v
